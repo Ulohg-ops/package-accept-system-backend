@@ -1,5 +1,6 @@
 package com.example.packagereceivesystem;
 
+import com.example.packagereceivesystem.model.Student;
 import com.example.packagereceivesystem.repository.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +22,8 @@ public class PackageReceiveSystemApplication implements CommandLineRunner {
     }
     @Override
     public void run(String... args) throws Exception {
-        studentDao.insert();
+//        studentDao.saveStudent(new Student(4l,"casd","asdasd","sadasd"));
+//        studentDao.findAllStudent();
     }
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin("http://127.0.0.1:3000/")
 @RequestMapping("/student")
 public class StudentController {
     @Autowired
@@ -22,8 +23,24 @@ public class StudentController {
 
 
     @PostMapping("/add")
-    public void add(@RequestBody Student student){
-        studentDao.saveStudent(student);
+    public String add(@RequestBody Student student){
+        return studentDao.saveStudent(student);
     }
 
+    @GetMapping("/{id}")
+    Student getStudentByID(@PathVariable Long id){
+      return studentDao.fillStudentByID(id);
+    }
+
+    @PutMapping("/{id}")
+    void updateStudent(@RequestBody Student student,@PathVariable Long id){
+        studentDao.updateStudent(student,id);
+
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteStudent(@PathVariable Long id){
+        studentDao.deleteStudent(id);
+
+    }
 }

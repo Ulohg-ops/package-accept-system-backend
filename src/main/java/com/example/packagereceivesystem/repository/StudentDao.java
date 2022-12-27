@@ -15,11 +15,14 @@ import java.util.List;
 
 @Component
 public class StudentDao {
-    private int student_id;
-    private String  student_name;
-    private String  student_email;
-    private String  student_department;
-    private String GET_ALL_STUDENT_COMMAND="SELECT * FROM Student";
+    private String GET_ALL_STUDENT_COMMAND="SELECT * FROM student";
+
+    private String GET_STUDENT_BY_ID_COMMAND="SELECT * FROM student WHERE student_id = ?";
+
+    private  String UPDATE_STUDENT = "update student set student_name = ?, student_email  = ? ,student_department =?  where student_id = ?";
+
+    private  String DELETE_STUDENT = "delete from student where student_id = ?";
+
     private String INSERT_STUDENT_COMMAND="INSERT INTO student(student_id, student_name, student_email, student_department) VALUES (?,?,?,?)";
     private static final Logger log = LoggerFactory.getLogger(StudentDao.class);
 
@@ -30,7 +33,25 @@ public class StudentDao {
         return jdbcTemplate.query(GET_ALL_STUDENT_COMMAND, new StudentMapper());
     }
 
-    public void saveStudent(Student student) {
+    public Student fillStudentByID(Long id){
+          return jdbcTemplate.queryForObject(GET_STUDENT_BY_ID_COMMAND, new Object[] { id }, new StudentMapper());
+    }
+
+    public void updateStudent(Student student,Long studentID){
+        jdbcTemplate.update(UPDATE_STUDENT,student.getName(),student.getEmail(),student.getDepartment(),studentID);
+        log.info("successful updated");
+    }
+
+    public void deleteStudent(Long studentID) {
+        try {
+            jdbcTemplate.update(DELETE_STUDENT, studentID);
+            log.info("successful deleted");
+        }catch (Exception e){
+            log.error(e.toString());
+        }
+    }
+
+    public String saveStudent(Student student) {
             try{
                 jdbcTemplate.update(INSERT_STUDENT_COMMAND, new PreparedStatementSetter() {
                     @Override
@@ -42,10 +63,13 @@ public class StudentDao {
                     }
                 });
                 log.info("successful insert");
+                return "successful insert";
 //                jdbcTemplate.update("INSERT INTO student(student_id, student_name, student_email, student_department) " +
 //                        "VALUES (?,?,?,?)",1005,"456","121","12312");
             } catch (Exception e) {
-                System.out.println(e.toString());
+                log.error(e.toString());
+                return e.toString();
             }
+
     }
 }
