@@ -2,9 +2,14 @@ package com.example.packagereceivesystem.controller;
 
 import com.example.packagereceivesystem.model.Student;
 import com.example.packagereceivesystem.repository.StudentDao;
+import com.example.packagereceivesystem.service.StudentServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -13,34 +18,16 @@ import java.util.List;
 @CrossOrigin("http://127.0.0.1:3000/")
 @RequestMapping("/student")
 public class StudentController {
+    private static final Logger log = LoggerFactory.getLogger(StudentController.class);
+
+
     @Autowired
-    private StudentDao studentDao;
+    private StudentServiceImpl studentService;
 
     @GetMapping("/getAll")
     public List<Student> list(){
-        return studentDao.findAllStudent();
-    }
-
-
-    @PostMapping("/add")
-    public String add(@RequestBody Student student){
-        return studentDao.saveStudent(student);
-    }
-
-    @GetMapping("/{id}")
-    Student getStudentByID(@PathVariable Long id){
-      return studentDao.fillStudentByID(id);
-    }
-
-    @PutMapping("/{id}")
-    void updateStudent(@RequestBody Student student,@PathVariable Long id){
-        studentDao.updateStudent(student,id);
-
-    }
-
-    @DeleteMapping("/{id}")
-    void deleteStudent(@PathVariable Long id){
-        studentDao.deleteStudent(id);
-
+        return studentService.getAllStudents();
     }
 }
+
+

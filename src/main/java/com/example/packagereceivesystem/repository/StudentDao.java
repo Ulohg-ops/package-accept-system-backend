@@ -26,6 +26,7 @@ public class StudentDao {
     private String INSERT_STUDENT_COMMAND="INSERT INTO student(student_id, student_name, student_email, student_department) VALUES (?,?,?,?)";
     private static final Logger log = LoggerFactory.getLogger(StudentDao.class);
 
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -33,8 +34,9 @@ public class StudentDao {
         return jdbcTemplate.query(GET_ALL_STUDENT_COMMAND, new StudentMapper());
     }
 
-    public Student fillStudentByID(Long id){
-          return jdbcTemplate.queryForObject(GET_STUDENT_BY_ID_COMMAND, new Object[] { id }, new StudentMapper());
+    public Student findStudentByID(Long id){
+
+        return jdbcTemplate.queryForObject(GET_STUDENT_BY_ID_COMMAND, new Object[] { id }, new StudentMapper());
     }
 
     public void updateStudent(Student student,Long studentID){

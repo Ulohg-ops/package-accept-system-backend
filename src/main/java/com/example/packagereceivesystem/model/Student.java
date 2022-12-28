@@ -1,7 +1,13 @@
 package com.example.packagereceivesystem.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import org.springframework.context.annotation.Primary;
+
+@Entity
 public class Student {
 
+    @Id
     private Long id;
     private String name;
     private String email;
