@@ -1,4 +1,4 @@
-package com.example.packagereceivesystem.repository;
+package com.example.packagereceivesystem.repisitory;
 
 import com.example.packagereceivesystem.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;

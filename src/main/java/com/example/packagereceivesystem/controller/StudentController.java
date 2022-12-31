@@ -1,15 +1,11 @@
 package com.example.packagereceivesystem.controller;
 
 import com.example.packagereceivesystem.model.Student;
-import com.example.packagereceivesystem.repository.StudentDao;
 import com.example.packagereceivesystem.service.StudentServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +24,24 @@ public class StudentController {
     public List<Student> list(){
         return studentService.getAllStudents();
     }
+    @GetMapping("/id")
+    public Student list(Long id){
+        return studentService.getStudent(id);
+    }
+    @PostMapping("/add")
+    Student newStudent(@RequestBody Student student) {
+        return studentService.addStudent(student);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteUser(@PathVariable Long id){
+         studentService.deleteStudent(id);
+    }
+    @PutMapping("/{id}")
+    Student updateStudent(@PathVariable Long id,@RequestBody Student student) {
+        return studentService.updateStudent(id,student);
+    }
+
 }
 
 
