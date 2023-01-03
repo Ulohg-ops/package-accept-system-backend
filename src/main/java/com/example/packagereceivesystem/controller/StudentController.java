@@ -1,46 +1,51 @@
 package com.example.packagereceivesystem.controller;
 
+import com.example.packagereceivesystem.exception.StudentNotFoundException;
 import com.example.packagereceivesystem.model.Student;
-import com.example.packagereceivesystem.repository.StudentDao;
+import com.example.packagereceivesystem.service.StudentServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
 @CrossOrigin("http://127.0.0.1:3000/")
 @RequestMapping("/student")
 public class StudentController {
+    private static final Logger log = LoggerFactory.getLogger(StudentController.class);
+
     @Autowired
-    private StudentDao studentDao;
+    private StudentServiceImpl studentService;
 
     @GetMapping("/getAll")
     public List<Student> list(){
-        return studentDao.findAllStudent();
+        return studentService.getAllStudents();
     }
-
-
-    @PostMapping("/add")
-    public String add(@RequestBody Student student){
-        return studentDao.saveStudent(student);
-    }
-
     @GetMapping("/{id}")
-    Student getStudentByID(@PathVariable Long id){
-      return studentDao.fillStudentByID(id);
+    public Student list(@PathVariable Long id){
+        return studentService.getStudent(id).orElseThrow(()->new StudentNotFoundException(id));
     }
-
-    @PutMapping("/{id}")
-    void updateStudent(@RequestBody Student student,@PathVariable Long id){
-        studentDao.updateStudent(student,id);
-
+    @PostMapping("/add")
+    ResponseEntity<String> newStudent(@RequestBody Student student) {
+         studentService.addStudent(student);
+        return ResponseEntity.ok("User is valid");
     }
 
     @DeleteMapping("/{id}")
-    void deleteStudent(@PathVariable Long id){
-        studentDao.deleteStudent(id);
-
+    void deleteUser(@PathVariable Long id){
+         studentService.deleteStudent(id);
     }
+    @PutMapping("/{id}")
+    ResponseEntity<String> updateStudent(@PathVariable Long id,@RequestBody Student student) {
+         studentService.updateStudent(id,student);
+         return ResponseEntity.ok("Student is updated successful");
+    }
+
 }
+
+
