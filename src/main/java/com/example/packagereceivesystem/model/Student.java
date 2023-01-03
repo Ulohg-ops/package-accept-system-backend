@@ -2,6 +2,8 @@ package com.example.packagereceivesystem.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.context.annotation.Primary;
 
 @Entity
@@ -9,7 +11,10 @@ public class Student {
 
     @Id
     private Long id;
+
+    @NotBlank(message = "Name is mandatory")
     private String name;
+//    @Email(message = "Not correct email format")
     private String email;
     private String department;
 
