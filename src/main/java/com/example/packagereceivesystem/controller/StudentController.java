@@ -33,12 +33,14 @@ public class StudentController {
     @PostMapping("/add")
     ResponseEntity<String> newStudent(@RequestBody Student student) {
          studentService.addStudent(student);
-        return ResponseEntity.ok("User is valid");
+        return ResponseEntity.ok("Student is add successful");
     }
 
     @DeleteMapping("/{id}")
-    void deleteUser(@PathVariable Long id){
+    ResponseEntity<String> deleteUser(@PathVariable Long id){
          studentService.deleteStudent(id);
+        return ResponseEntity.ok("Student is deleted successful");
+
     }
     @PutMapping("/{id}")
     ResponseEntity<String> updateStudent(@PathVariable Long id,@RequestBody Student student) {

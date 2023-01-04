@@ -12,9 +12,7 @@ public class Student {
     @Id
     private Long id;
 
-    @NotBlank(message = "Name is mandatory")
     private String name;
-//    @Email(message = "Not correct email format")
     private String email;
     private String department;
 

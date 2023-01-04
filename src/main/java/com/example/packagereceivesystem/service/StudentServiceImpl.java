@@ -1,5 +1,6 @@
 package com.example.packagereceivesystem.service;
 
+import com.example.packagereceivesystem.exception.FieldEmptyException;
 import com.example.packagereceivesystem.exception.StudentNotFoundException;
 import com.example.packagereceivesystem.model.Student;
 import com.example.packagereceivesystem.repisitory.StudentRepository;
@@ -23,6 +24,9 @@ public class StudentServiceImpl {
     }
 
     public Student addStudent(Student student){
+        if(student.getName().equals("")||student.getDepartment().equals("")){
+            throw new FieldEmptyException();
+        }
         return studentRepository.save(student);
     }
     public void deleteStudent(Long id){
