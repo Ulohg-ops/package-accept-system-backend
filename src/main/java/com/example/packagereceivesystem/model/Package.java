@@ -1,29 +1,36 @@
 package com.example.packagereceivesystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 public class Package {
     @Id
     private String packageID;
     private String packageType;
-    private String logisticsType ;
-    private Boolean isReceipted ;
-    private Boolean isNotify ;
-    private String deliverTime;
+    private String recipient ;
+    private String isReceipted ;
+    private String isNotify ;
+    
+    @CreationTimestamp
+    @Column(name="creationDateTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date creationDateTime;
 
-    public Package(String packageID, String packageType, String logisticsType, Boolean isReceipted, Boolean isNotify, String deliverTime) {
-        this.packageID = packageID;
-        this.packageType = packageType;
-        this.logisticsType = logisticsType;
-        this.isReceipted = isReceipted;
-        this.isNotify = isNotify;
-        this.deliverTime = deliverTime;
+    public Package(){
+
     }
 
-    public Package() {
-
+    public Package(String packageID, String packageType, String recipient, String isReceipted, String isNotify, Timestamp  creationDateTime) {
+        this.packageID = packageID;
+        this.packageType = packageType;
+        this.recipient = recipient;
+        this.isReceipted = isReceipted;
+        this.isNotify = isNotify;
+        this.creationDateTime = creationDateTime;
     }
 
     public String getPackageID() {
@@ -42,35 +49,35 @@ public class Package {
         this.packageType = packageType;
     }
 
-    public String getLogisticsType() {
-        return logisticsType;
+    public String getRecipient() {
+        return recipient;
     }
 
-    public void setLogisticsType(String logisticsType) {
-        this.logisticsType = logisticsType;
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
     }
 
-    public Boolean getReceipted() {
+    public String getIsReceipted() {
         return isReceipted;
     }
 
-    public void setReceipted(Boolean receipted) {
-        isReceipted = receipted;
+    public void setIsReceipted(String isReceipted) {
+        this.isReceipted = isReceipted;
     }
 
-    public Boolean getNotify() {
+    public String getIsNotify() {
         return isNotify;
     }
 
-    public void setNotify(Boolean notify) {
-        isNotify = notify;
+    public void setIsNotify(String isNotify) {
+        this.isNotify = isNotify;
     }
 
-    public String getDeliverTime() {
-        return deliverTime;
+    public Date getCreationDateTime() {
+        return creationDateTime;
     }
 
-    public void setDeliverTime(String deliverTime) {
-        this.deliverTime = deliverTime;
+    public void setCreationDateTime(Timestamp  creationDateTime) {
+        this.creationDateTime = creationDateTime;
     }
 }
