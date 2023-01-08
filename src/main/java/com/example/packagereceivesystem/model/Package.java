@@ -14,8 +14,8 @@ public class Package {
     private String recipient ;
     private String isReceipted ;
     private String isNotify ;
-    
-    @CreationTimestamp
+
+//    @CreationTimestamp
     @Column(name="creationDateTime")
     @Temporal(TemporalType.TIMESTAMP)
     Date creationDateTime;

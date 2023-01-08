@@ -1,5 +1,6 @@
 package com.example.packagereceivesystem.service;
 
+import com.example.packagereceivesystem.exception.StudentNotFoundException;
 import com.example.packagereceivesystem.model.Package;
 import com.example.packagereceivesystem.model.Student;
 import com.example.packagereceivesystem.repisitory.PackageRepository;
@@ -20,6 +21,11 @@ public class PackageServiceImpl {
     public List<Package> getAllPackages() {
         return packageRepostitory.findAll();
     }
-
+    public void deletePackage(String id){
+//        if(!packageRepostitory.existsById(id)){
+//            throw new StudentNotFoundException(id);
+//        }
+        packageRepostitory.deleteById(id);
+    }
 
 }

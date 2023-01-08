@@ -31,6 +31,12 @@ public class PackageController {
     public List<Package> list(){
         return packageService.getAllPackages();
     }
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> deleteUser(@PathVariable String id){
+        packageService.deletePackage(id);
+        return ResponseEntity.ok("Student is deleted successful");
+
+    }
 }
 
 
